@@ -1,5 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
 import GameBotton from "./GameBotton";
+import greenSound from "/sounds/s01.mp3";
+import redSound from "/sounds/s02.mp3";
+import yellowSound from "/sounds/s03.mp3";
+import blueSound from "/sounds/s04.mp3";
+// import errorSound from "./sounds"
 
 const colors = ["green", "red", "yellow", "blue"];
 
@@ -8,6 +13,13 @@ function SimonGame() {
   const [sequence, setSequence] = useState([]);
   const [playing, setPlaying] = useState(false);
   const [playingIdx, setPlayingIdx] = useState(0);
+
+  // Sounds
+  const greenSoundRef = useRef(new Audio(greenSound));
+  const redSoundRef = useRef(new Audio(redSound));
+  const yellowSoundRef = useRef(new Audio(yellowSound));
+  const blueSoundRef = useRef(new Audio(blueSound));
+
 
   // refs
   const greenRef = useRef(null);
@@ -45,6 +57,24 @@ function SimonGame() {
         e.target.classList.remove("opacity-50")
 
         const clickColor = e.target.getAttribute("color");
+
+        // clicked sound
+        switch (clickColor) {
+          case "green":
+            greenSoundRef.current.play();
+            break;
+          case "red":
+            redSoundRef.current.play();
+            break;
+          case "yellow":
+            yellowSoundRef.current.play();
+            break;
+          case "blue":
+            blueSoundRef.current.play();
+            break;
+          default:
+            break;
+        }
 
         //   clicked the correct color of the sequence
         if (sequence[playingIdx] === clickColor) {
